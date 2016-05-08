@@ -1,0 +1,65 @@
+{
+
+  "variables": {
+    "atlas_token": "{{env `ATLAS_TOKEN`}}"
+  },
+
+    "builders": [
+      {
+        "type": "virtualbox-iso",
+        "guest_os_type": "RedHat_64",
+        "iso_url": "http://mirrors.kernel.org/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1511.iso",
+        "iso_checksum": "88c0437f0a14c6e2c94426df9d43cd67",
+        "iso_checksum_type": "md5",
+        "vm_name": "docker-architecture-centos-7-1-x64",
+        "boot_wait": "10s",
+        "boot_command": [ "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>"],
+        "http_directory": "http",
+        "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
+        "ssh_username": "root",
+        "ssh_password": "vagrant",
+        "ssh_wait_timeout": "10000s",
+        "ssh_pty": true,
+        "disk_size": 40096,
+        "vboxmanage": [
+            ["modifyvm", "{{.Name}}", "--memory", "2048"],
+            ["modifyvm", "{{.Name}}", "--cpus", "2"]
+        ],
+        "shutdown_command": "/sbin/halt -h -p"
+      }
+    ],
+
+    "provisioners": [
+   {
+     "execute_command": "echo 'vagrant' | sudo -S -E bash '{{.Path}}'",
+     "scripts": [
+       "scripts/sshd.sh",
+       "scripts/vagrant.sh",
+       "scripts/graphical.sh",
+       "scripts/virtualbox.sh",
+       "scripts/cleanup.sh",
+       "scripts/spacesaver.sh"
+     ],
+     "type": "shell"
+   }
+ ],
+
+    "post-processors": [
+      [{
+      "type": "vagrant",
+      "keep_input_artifact": false
+    },
+      {
+        "type": "atlas",
+        "token": "{{user `atlas_token`}}",
+        "artifact": "tgarlot/docker-archi",
+        "artifact_type": "vagrant.box",
+        "metadata": {
+          "provider": "virtualbox",
+          "version": "0.2.1",
+          "created_at": "{{timestamp}}"
+        }
+      }]
+    ]
+
+}
