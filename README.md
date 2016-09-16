@@ -8,7 +8,9 @@ C'est la prochaine "génération de Vagrant" car il permet de générer des imag
 
 Il suffit simplement d'installer Packer puis de récupérer les différents et lancer la création de la box.
 
-<code>$ git clone https://github.com/dunod-docker/vagrant-box.git
+```bash
+$ git clone https://github.com/dunod-docker/vagrant-box.git
 $ cd vagrant-box
 $  export ATLAS_TOKEN=TOKEN # le token est nécessaire pour pouvoir utiliser Atlas
 $ packer build PackerFile.json</code>
+```
