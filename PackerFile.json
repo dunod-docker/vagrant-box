@@ -1,16 +1,17 @@
 {
 
   "variables": {
-    "atlas_token": "{{env `ATLAS_TOKEN`}}"
+    "cloud_token": "{{env `VAGRANT_CLOUD_TOKEN`}}",
+    "version": "0.3.1"
   },
 
     "builders": [
       {
         "type": "virtualbox-iso",
         "guest_os_type": "RedHat_64",
-        "iso_url": "http://mirrors.kernel.org/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1511.iso",
-        "iso_checksum": "88c0437f0a14c6e2c94426df9d43cd67",
-        "iso_checksum_type": "md5",
+        "iso_url": "https://mirrors.edge.kernel.org/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1708.iso",
+        "iso_checksum": "bba314624956961a2ea31dd460cd860a77911c1e0a56e4820a12b9c5dad363f5",
+        "iso_checksum_type": "sha256",
         "vm_name": "docker-architecture-centos-7-1-x64",
         "boot_wait": "10s",
         "boot_command": [ "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>"],
@@ -50,15 +51,10 @@
       "keep_input_artifact": false
     },
       {
-        "type": "atlas",
-        "token": "{{user `atlas_token`}}",
-        "artifact": "tgarlot/docker-archi",
-        "artifact_type": "vagrant.box",
-        "metadata": {
-          "provider": "virtualbox",
-          "version": "0.2.1",
-          "created_at": "{{timestamp}}"
-        }
+        "type": "vagrant-cloud",
+        "access_token": "{{user `cloud_token`}}",
+        "box_tag": "dunod-docker/centos7",
+        "version": "{{user `version`}}"
       }]
     ]
 
