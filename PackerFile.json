@@ -12,7 +12,7 @@
         "iso_url": "https://mirrors.edge.kernel.org/centos/7/isos/x86_64/CentOS-7-x86_64-Minimal-1708.iso",
         "iso_checksum": "bba314624956961a2ea31dd460cd860a77911c1e0a56e4820a12b9c5dad363f5",
         "iso_checksum_type": "sha256",
-        "vm_name": "docker-architecture-centos-7-1-x64",
+        "vm_name": "docker-architecture-centos-7-x64",
         "boot_wait": "10s",
         "boot_command": [ "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>"],
         "http_directory": "http",
