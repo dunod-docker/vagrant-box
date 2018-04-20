@@ -2,7 +2,7 @@
 
   "variables": {
     "cloud_token": "{{env `VAGRANT_CLOUD_TOKEN`}}",
-    "version": "0.3.1"
+    "version": "0.3.2"
   },
 
     "builders": [
@@ -14,6 +14,7 @@
         "iso_checksum_type": "sha256",
         "vm_name": "docker-architecture-centos-7-x64",
         "boot_wait": "10s",
+        "post_shutdown_delay": "30s",
         "boot_command": [ "<tab> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg<enter><wait>"],
         "http_directory": "http",
         "guest_additions_path": "VBoxGuestAdditions_{{.Version}}.iso",
